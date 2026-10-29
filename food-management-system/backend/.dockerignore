@@ -1,0 +1,18 @@
+# Sử dụng môi trường Node.js bản nhẹ
+FROM node:20-alpine
+
+# Thiết lập thư mục làm việc trong container
+WORKDIR /app
+
+# Copy các file quản lý thư viện và cài đặt (để tối ưu cache)
+COPY package*.json ./
+RUN npm install --production
+
+# Copy toàn bộ mã nguồn backend vào container
+COPY . .
+
+# Expose cổng 5005
+EXPOSE 5005
+
+# Lệnh khởi động server
+CMD ["npm", "start"]
